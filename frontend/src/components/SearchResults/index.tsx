@@ -5,11 +5,12 @@ import './styles.css'
 
 interface ISearchResults {
   items: Array<Object>,
+  onItemClick?: (repo: string) => void,
 }
 
 export class SearchResults extends React.PureComponent<ISearchResults> {
   render() {
-    const {items} = this.props
+    const {items, onItemClick} = this.props
     return (
       <>
         <div>Результаты поиска:</div>
@@ -20,7 +21,7 @@ export class SearchResults extends React.PureComponent<ISearchResults> {
             const name = _get(item, 'full_name')
 
             return (
-              <div key={index} className={'container'}>
+              <div key={index} className={'container'} onClick={() => onItemClick(name)}>
                 <h1>{name}</h1>
                 <div className={'description'}>
                   <img src={avatarSrc} alt={author} />

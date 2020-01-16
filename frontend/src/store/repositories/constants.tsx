@@ -1,0 +1,6 @@
+export const FETCH_REPOSITORIES = 'repositories/FETCH_REPOSITORIES'
+export const FETCH_REPOSITORIES_SUCCESS = 'repositories/FETCH_REPOSITORIES_SUCCESS'
+export const FETCH_REPOSITORIES_FAIL = 'repositories/FETCH_REPOSITORIES_FAIL'
+export const SET_ACTIVE_REPOSITORY = 'repositories/SET_ACTIVE_REPOSITORY'
+export const CLEAR_REPOSITORIES = 'repositories/CLEAR_REPOSITORIES'
+export const SEARCH = 'repositories/SEARCH'

@@ -7,10 +7,12 @@ import {routerMiddleware, RouterState} from 'connected-react-router'
 import saga from './saga'
 import createRootReducer from './reducer'
 
-import {IAppStore} from 'store/app/types'
+import {IRepositoriesStore} from 'store/repositories/types'
+import {IBrunchesStore} from 'store/brunches/types'
 
 export interface IStore {
-  app: IAppStore,
+  repositories: IRepositoriesStore,
+  brunches: IBrunchesStore,
   router: RouterState,
 }
 

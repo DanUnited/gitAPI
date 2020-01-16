@@ -7,7 +7,7 @@ import createStore, {history, IStore} from 'store'
 import {Redirect, Route, Switch} from 'react-router'
 
 import {SearchRepositories} from 'screens/SearchRepositories'
-import {RepositoryDetails} from 'screens/RepositoryDetails'
+import {Brunches} from 'screens/Brunches'
 
 import logo from 'images/logo.svg'
 
@@ -25,13 +25,13 @@ export class App extends React.Component {
     render(): React.ReactNode {
         return (
             <div className="App">
-                <img src={logo} alt={'logo'} className={'App-logo'}/>
+                <img src={logo} alt={'logo'} className={'App-logo'} />
                 <header className="App-header">
                     <Provider store={this.store}>
                         <ConnectedRouter history={history}>
                             <Switch>
+                                <Route path="/brunches/:author/:repo" component={Brunches} />
                                 <Route path="/" component={SearchRepositories} />
-                                <Route path="/details" component={RepositoryDetails} />
 
                                 <Redirect to={'/'} />
                             </Switch>

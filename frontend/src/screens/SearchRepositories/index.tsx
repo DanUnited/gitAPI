@@ -1,54 +1,62 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {push} from 'connected-react-router'
+import _isEmpty from 'lodash/isEmpty'
 
-import {getRepositories} from 'store/app/selectors'
-import {fetchRepositories} from 'store/app/actions'
+
+import {getRepositories, getSearchValue} from 'store/repositories/selectors'
+import {fetchRepositories, clearRepositories, search} from 'store/repositories/actions'
 
 import {SearchResults} from 'components/SearchResults'
 
 interface ISearchRepositoriesClass {
   fetchRepositories: Function,
+  clearRepositories: Function,
+  search: Function,
+  push: Function,
+  searchValue: string,
   repositories: Array<Object>,
 }
 
-interface IState {
-  searchValue: string,
-}
-
-class SearchRepositoriesClass extends Component<ISearchRepositoriesClass, IState> {
-  state = {
-    searchValue: '',
-  }
-
+class SearchRepositoriesClass extends Component<ISearchRepositoriesClass> {
   render(): React.ReactNode {
-    const {repositories} = this.props
+    const {repositories, searchValue} = this.props
     return (
       <>
-        <input type={'text'} onChange={this.onSearchChange} />
-        <button onClick={this.onSearchClick}>Search</button>
-        <SearchResults items={repositories} />
+        <input type={'text'} onChange={this.onSearchChange} placeholder={'search...'} value={searchValue} />
+        <SearchResults items={repositories} onItemClick={this.toCommits} />
       </>
     )
   }
 
-  onSearchClick = () => {
-    const {fetchRepositories} = this.props
-    fetchRepositories(this.state.searchValue)
+  toCommits = (repo) => {
+    this.props.push(`/brunches/${repo}`)
   }
 
   onSearchChange = e => {
-    this.setState({
-      searchValue: e.target.value,
-    })
+    const {value} = e.target
+    const {fetchRepositories, clearRepositories, search, searchValue} = this.props
+
+    search(value)
+
+    if (_isEmpty(value)) {
+      clearRepositories()
+    } else {
+      fetchRepositories(searchValue)
+    }
   }
 }
 
 const mapStateToProps = state => ({
   repositories: getRepositories(state),
+  searchValue: getSearchValue(state),
 })
 
 const mapDispatchToProps = {
   fetchRepositories,
+  clearRepositories,
+  push,
+  search,
 }
 
 export const SearchRepositories = connect(mapStateToProps, mapDispatchToProps)(SearchRepositoriesClass)

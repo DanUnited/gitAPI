@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux'
 import {connectRouter} from 'connected-react-router'
 
-import appReducer from 'store/app/reducer'
+import repositoriesReducer from 'store/repositories/reducer'
+import brunchesReducer from 'store/brunches/reducer'
 
 export default history => combineReducers({
   router: connectRouter(history),
-  app: appReducer,
+  repositories: repositoriesReducer,
+  brunches: brunchesReducer,
 })

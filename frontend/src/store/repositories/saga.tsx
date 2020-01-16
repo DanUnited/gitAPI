@@ -2,7 +2,7 @@ import {takeLatest, put} from 'redux-saga/effects'
 
 import {searchRepositoriesURL} from 'api/routes'
 import {FETCH_REPOSITORIES} from './constants'
-import {fetchRepositoruesFail, fetchRepositoruesSuccess} from './actions'
+import {fetchRepositoriesFail, fetchRepositoriesSuccess} from './actions'
 
 function* fetchRepositories({type, payload}) {
   const response = yield fetch(searchRepositoriesURL + '?q=' + payload, {
@@ -15,9 +15,9 @@ function* fetchRepositories({type, payload}) {
   const result = yield response.json()
 
   if (response.ok) {
-    yield put(fetchRepositoruesSuccess(result.items))
+    yield put(fetchRepositoriesSuccess(result.items))
   } else {
-    yield put(fetchRepositoruesFail())
+    yield put(fetchRepositoriesFail())
   }
 }
 
