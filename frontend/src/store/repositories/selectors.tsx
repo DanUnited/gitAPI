@@ -6,3 +6,6 @@ const local = (state: IStore): IRepositoriesStore => state.repositories
 export const getRepositories = (state: IStore) => local(state).items
 
 export const getSearchValue = (state: IStore) => local(state).search
+
+export const isLoading = (state: IStore) => local(state).load
+

@@ -3,11 +3,11 @@ import {connect} from 'react-redux'
 import {push} from 'connected-react-router'
 import _isEmpty from 'lodash/isEmpty'
 
-
-import {getRepositories, getSearchValue} from 'store/repositories/selectors'
+import {getRepositories, getSearchValue, isLoading} from 'store/repositories/selectors'
 import {fetchRepositories, clearRepositories, search} from 'store/repositories/actions'
 
 import {SearchResults} from 'components/SearchResults'
+import {LoadSpinner} from 'components/LoadSpinner'
 
 interface ISearchRepositoriesClass {
   fetchRepositories: Function,
@@ -16,15 +16,21 @@ interface ISearchRepositoriesClass {
   push: Function,
   searchValue: string,
   repositories: Array<Object>,
+  isLoading: boolean,
 }
 
 class SearchRepositoriesClass extends Component<ISearchRepositoriesClass> {
   render(): React.ReactNode {
-    const {repositories, searchValue} = this.props
+    const {repositories, searchValue, isLoading} = this.props
+
+    const results = isLoading ? <LoadSpinner /> : (
+      <SearchResults items={repositories} onItemClick={this.toCommits} />
+    )
+
     return (
       <>
         <input type={'text'} onChange={this.onSearchChange} placeholder={'search...'} value={searchValue} />
-        <SearchResults items={repositories} onItemClick={this.toCommits} />
+        {results}
       </>
     )
   }
@@ -50,6 +56,7 @@ class SearchRepositoriesClass extends Component<ISearchRepositoriesClass> {
 const mapStateToProps = state => ({
   repositories: getRepositories(state),
   searchValue: getSearchValue(state),
+  isLoading: isLoading(state),
 })
 
 const mapDispatchToProps = {

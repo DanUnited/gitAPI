@@ -5,6 +5,7 @@ import {
   SET_ACTIVE_REPOSITORY,
   CLEAR_REPOSITORIES,
   SEARCH,
+  SET_LOAD,
 } from './constants'
 
 export const fetchRepositories = (q?: string) => ({type: FETCH_REPOSITORIES, payload: q})
@@ -17,5 +18,5 @@ export const setActiveRepository = (params: {
 }) => ({type: SET_ACTIVE_REPOSITORY})
 
 export const clearRepositories = () => ({type: CLEAR_REPOSITORIES})
-
 export const search = (val: string) => ({type: SEARCH, payload: val})
+export const setLoad = (isLoading: boolean) => ({type: SET_LOAD, payload: isLoading})

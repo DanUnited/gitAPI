@@ -3,18 +3,22 @@ import {connect} from 'react-redux'
 import {push} from 'connected-react-router'
 
 import {BrunchesList} from 'components/BrunchesList'
-import {getBrunches} from 'store/brunches/selectors'
+import {LoadSpinner} from 'components/LoadSpinner'
+import {getBrunches, isLoading} from 'store/brunches/selectors'
 
 interface IBrunchesClass {
   brunches: Array<Object>,
+  isLoading: boolean,
 }
 
 export class BrunchesClass extends Component<IBrunchesClass> {
   render(): React.ReactNode {
-    const {brunches} = this.props
+    const {brunches, isLoading} = this.props
+    const results = isLoading ? <LoadSpinner /> : <BrunchesList items={brunches} />
+
     return (
       <>
-        <BrunchesList items={brunches} />
+        {results}
       </>
     )
   }
@@ -23,6 +27,7 @@ export class BrunchesClass extends Component<IBrunchesClass> {
 
 const mapStateToProps = state => ({
   brunches: getBrunches(state),
+  isLoading: isLoading(state),
 })
 
 const mapDispatchToProps = {
