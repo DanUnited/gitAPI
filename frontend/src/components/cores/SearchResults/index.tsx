@@ -13,7 +13,6 @@ export class SearchResults extends React.PureComponent<ISearchResults> {
     const {items, onItemClick} = this.props
     return (
       <>
-        <div>Результаты поиска:</div>
         {
           items.map((item, index) => {
             const author = _get(item, 'owner.login')

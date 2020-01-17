@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {push} from 'connected-react-router'
 
-import {BrunchesList} from 'components/BrunchesList'
-import {LoadSpinner} from 'components/LoadSpinner'
+import {BrunchesList} from 'components/cores/BrunchesList'
+import {LoadContainer} from 'components/cores/LoadContainer'
 import {getBrunches, isLoading} from 'store/brunches/selectors'
 
 interface IBrunchesClass {
@@ -14,11 +14,12 @@ interface IBrunchesClass {
 export class BrunchesClass extends Component<IBrunchesClass> {
   render(): React.ReactNode {
     const {brunches, isLoading} = this.props
-    const results = isLoading ? <LoadSpinner /> : <BrunchesList items={brunches} />
 
     return (
       <>
-        {results}
+        <LoadContainer isLoading={isLoading}>
+          <BrunchesList items={brunches} />
+        </LoadContainer>
       </>
     )
   }

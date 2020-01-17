@@ -6,8 +6,8 @@ import _isEmpty from 'lodash/isEmpty'
 import {getRepositories, getSearchValue, isLoading} from 'store/repositories/selectors'
 import {fetchRepositories, clearRepositories, search} from 'store/repositories/actions'
 
-import {SearchResults} from 'components/SearchResults'
-import {LoadSpinner} from 'components/LoadSpinner'
+import {SearchResults} from 'components/cores/SearchResults'
+import {LoadContainer} from 'components/cores/LoadContainer'
 
 interface ISearchRepositoriesClass {
   fetchRepositories: Function,
@@ -23,14 +23,13 @@ class SearchRepositoriesClass extends Component<ISearchRepositoriesClass> {
   render(): React.ReactNode {
     const {repositories, searchValue, isLoading} = this.props
 
-    const results = isLoading ? <LoadSpinner /> : (
-      <SearchResults items={repositories} onItemClick={this.toCommits} />
-    )
-
     return (
       <>
         <input type={'text'} onChange={this.onSearchChange} placeholder={'search...'} value={searchValue} />
-        {results}
+
+        <LoadContainer isLoading={isLoading}>
+          <SearchResults items={repositories} onItemClick={this.toCommits} />
+        </LoadContainer>
       </>
     )
   }
